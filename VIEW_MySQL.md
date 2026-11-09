@@ -153,7 +153,7 @@ SELECT id, name, email, created_at
 FROM customers
 WHERE city = 'Москва';
 ```
-`CREATE OR REPLACE` перезаписываеDROP VIEW IF EXISTS moscow_customers;т старое определение новым, не удаляя VIEW.
+`CREATE OR REPLACE` заменяет старое определение новым без предварительного удаления представления.
 
 Получить результат:
 ```sql
@@ -406,5 +406,3 @@ DELETE FROM customers WHERE email = 'test@example.com';
 ---
 
 ссылка на dump: [dump](./VIEW/dump.sql)
-
-бебебе

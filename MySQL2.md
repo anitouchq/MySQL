@@ -832,7 +832,8 @@ SELECT * FROM my_actions LIMIT 5;
 
 ![miao](./my-mysql/sys2/1.png)
 
-![miao](./my-mysql/sys2/2.png)
+<img width="2332" height="591" alt="image" src="https://github.com/user-attachments/assets/54ab3886-d95a-4ceb-a670-233e12a10775" />
+
 
 ![miao](./my-mysql/sys2/3.png)
 

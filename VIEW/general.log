@@ -1,0 +1,96 @@
+2026-11-10T06:44:12.104512Z	    8 Query	CREATE DATABASE sql_practice
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci
+2026-11-10T06:44:35.231094Z	    8 Query	CREATE TABLE customers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    city VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+2026-11-10T06:44:42.112340Z	    8 Query	CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    order_date DATE NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'new',
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+2026-11-10T06:45:10.890123Z	    8 Query	INSERT INTO customers (name, email, city) VALUES
+  ('Иван Иванов', 'ivan@example.com', 'Москва'),
+  ('Пётр Петров', 'petr@example.com', 'Санкт-Петербург'),
+  ('Мария Сидорова', 'maria@example.com', 'Москва'),
+  ('Алексей Смирнов', 'alex@example.com', 'Казань'),
+  ('Ольга Кузнецова', 'olga@example.com', 'Новосибирск')
+2026-11-10T06:45:18.445120Z	    8 Query	INSERT INTO orders (customer_id, order_date, amount, status) VALUES
+  (1, '2026-10-01', 1500.00, 'paid'),
+  (1, '2026-10-05', 2300.50, 'paid'),
+  (2, '2026-10-03', 800.00, 'new'),
+  (3, '2026-10-07', 4200.00, 'paid'),
+  (3, '2026-10-10', 1100.00, 'cancelled'),
+  (4, '2026-10-12', 950.00, 'new')
+2026-11-10T06:45:25.672311Z	    8 Query	SHOW TABLES
+2026-11-10T06:45:32.109283Z	    8 Query	SELECT * FROM customers
+2026-11-10T06:45:38.332190Z	    8 Query	SELECT * FROM orders
+2026-11-10T06:46:05.554129Z	    8 Query	SELECT * FROM customers WHERE city = 'Москва'
+2026-11-10T06:46:18.918273Z	    8 Query	CREATE VIEW moscow_customers AS
+SELECT id, name, email
+FROM customers
+WHERE city = 'Москва'
+2026-11-10T06:46:25.192837Z	    8 Query	SELECT * FROM moscow_customers
+2026-11-10T06:47:02.647382Z	    8 Query	CREATE VIEW customer_summary AS
+SELECT c.id,
+       c.name,
+       c.city,
+       COUNT(o.id)              AS order_count,
+       COALESCE(SUM(o.amount), 0) AS total_amount
+FROM customers c
+LEFT JOIN orders o ON c.id = o.customer_id
+GROUP BY c.id, c.name, c.city
+2026-11-10T06:47:12.283746Z	    8 Query	SELECT * FROM customer_summary ORDER BY total_amount DESC
+2026-11-10T06:47:24.837465Z	    8 Query	SELECT name, total_amount FROM customer_summary WHERE total_amount > 2000
+2026-11-10T06:47:40.192834Z	    8 Query	SELECT * FROM customer_summary WHERE city = 'Москва'
+2026-11-10T06:48:01.475869Z	    8 Query	SHOW FULL TABLES WHERE Table_type = 'VIEW'
+2026-11-10T06:48:08.928374Z	    8 Query	SHOW TABLES
+2026-11-10T06:48:18.384756Z	    8 Query	SHOW CREATE VIEW customer_summary
+2026-11-10T06:48:40.748392Z	    8 Query	SELECT * FROM moscow_customers
+2026-11-10T06:48:52.102938Z	    8 Query	CREATE OR REPLACE VIEW moscow_customers AS
+SELECT id, name, email, created_at
+FROM customers
+WHERE city = 'Москва'
+2026-11-10T06:49:01.564738Z	    8 Query	SELECT * FROM moscow_customers
+2026-11-10T06:49:15.847362Z	    8 Query	DROP VIEW moscow_customers
+2026-11-10T06:49:22.293847Z	    8 Query	DROP VIEW IF EXISTS moscow_customers
+2026-11-10T06:49:28.675849Z	    8 Query	SHOW TABLES
+2026-11-10T06:50:02.192038Z	    8 Query	CREATE VIEW active_customers AS
+SELECT id, name, email, city
+FROM customers
+WHERE city IS NOT NULL
+2026-11-10T06:50:15.485769Z	    8 Query	UPDATE active_customers SET city = 'Сочи' WHERE id = 2
+2026-11-10T06:50:22.938475Z	    8 Query	SELECT * FROM customers WHERE id = 2
+2026-11-10T06:50:38.104512Z	    8 Query	INSERT INTO active_customers (name, email, city)
+VALUES ('Новый Клиент', 'new@example.com', 'Уфа')
+2026-11-10T06:50:48.231094Z	    8 Query	DELETE FROM active_customers WHERE id = 6
+2026-11-10T06:51:10.112340Z	    8 Query	UPDATE customer_summary SET name = 'X' WHERE id = 1
+2026-11-10T06:51:35.890123Z	    8 Query	EXPLAIN SELECT * FROM customer_summary WHERE city = 'Москва'
+2026-11-10T06:52:05.445120Z	    8 Query	CREATE OR REPLACE VIEW moscow_customers AS
+SELECT id, name, email, city
+FROM customers
+WHERE city = 'Москва'
+2026-11-10T06:52:18.672311Z	    8 Query	INSERT INTO moscow_customers (name, email, city)
+VALUES ('Пётр Второй', 'petr2@example.com', 'Казань')
+2026-11-10T06:52:28.109283Z	    8 Query	SELECT * FROM customers WHERE email = 'petr2@example.com'
+2026-11-10T06:52:35.332190Z	    8 Query	SELECT * FROM moscow_customers
+2026-11-10T06:52:50.554129Z	    8 Query	CREATE OR REPLACE VIEW moscow_customers AS
+SELECT id, name, email, city
+FROM customers
+WHERE city = 'Москва'
+WITH CHECK OPTION
+2026-11-10T06:53:02.918273Z	    8 Query	INSERT INTO moscow_customers (name, email, city)
+VALUES ('Пётр Третий', 'petr3@example.com', 'Казань')
+2026-11-10T06:53:18.192837Z	    8 Query	DELETE FROM customers WHERE email IN ('petr2@example.com', 'petr3@example.com')
+2026-11-10T06:53:25.647382Z	    8 Query	DELETE FROM customers WHERE id > 5
+2026-11-10T06:53:45.283746Z	    8 Query	CREATE VIEW public_customers AS
+SELECT id, name, city FROM customers
+2026-11-10T06:53:55.837465Z	    8 Query	CREATE USER 'analyst'@'%' IDENTIFIED BY <secret>
+2026-11-10T06:54:02.192834Z	    8 Query	GRANT SELECT ON sql_practice.public_customers TO 'analyst'@'%'

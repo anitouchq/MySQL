@@ -1,0 +1,59 @@
+2026-11-10T07:30:10.112045Z	    8 Query	CREATE DATABASE shop
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci
+2026-11-10T07:30:15.443210Z	    8 Query	SHOW DATABASES
+2026-11-10T07:30:32.891234Z	    8 Query	CREATE TABLE products1 (
+    name  VARCHAR(100) NOT NULL,
+    price INT NOT NULL
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+2026-11-10T07:30:38.109283Z	    8 Query	CREATE TABLE products2 (
+    name  VARCHAR(100) NOT NULL,
+    price INT NOT NULL
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+2026-11-10T07:30:44.554129Z	    8 Query	SHOW TABLES
+2026-11-10T07:31:02.332190Z	    8 Query	INSERT INTO products1 (name, price) VALUES
+  ('Дыни', 800),
+  ('Клубника', 150),
+  ('Яблоки', 120),
+  ('Лимоны', 200)
+2026-11-10T07:31:08.918273Z	    8 Query	INSERT INTO products2 (name, price) VALUES
+  ('Дыни', 800),
+  ('Клубника', 150),
+  ('Каштаны', 200),
+  ('Хурма', 350)
+2026-11-10T07:31:15.192837Z	    8 Query	SELECT * FROM products1
+2026-11-10T07:31:20.647382Z	    8 Query	SELECT * FROM products2
+2026-11-10T07:31:45.283746Z	    8 Query	SELECT * FROM products1 WHERE price > 150
+2026-11-10T07:32:01.837465Z	    8 Query	SELECT name FROM products1
+2026-11-10T07:32:18.192834Z	    8 Query	SELECT name FROM products1
+UNION
+SELECT name FROM products2
+2026-11-10T07:32:40.475869Z	    8 Query	SELECT name, price FROM products1
+EXCEPT
+SELECT name, price FROM products2
+2026-11-10T07:33:05.928374Z	    8 Query	SELECT name, price FROM products1
+INTERSECT
+SELECT name, price FROM products2
+2026-11-10T07:33:30.384756Z	    8 Query	SELECT t1.name AS name1, t1.price AS price1,
+       t2.name AS name2, t2.price AS price2
+FROM products1 t1
+CROSS JOIN products2 t2
+2026-11-10T07:33:55.748392Z	    8 Query	SELECT t1.name, t1.price AS price1, t2.price AS price2
+FROM products1 t1
+JOIN products2 t2 ON t1.name = t2.name
+2026-11-10T07:34:15.102938Z	    8 Query	SELECT t1.name, t1.price AS price1, t2.price AS price2
+FROM products1 t1
+LEFT JOIN products2 t2 ON t1.name = t2.name
+2026-11-10T07:36:05.564738Z	   10 Query	SHOW DATABASES
+2026-11-10T07:36:12.847362Z	   10 Query	SHOW TABLES
+2026-11-10T07:36:25.293847Z	   10 Query	DROP DATABASE shop
+2026-11-10T07:36:32.675849Z	   10 Query	SHOW DATABASES
+2026-11-10T07:37:10.192038Z	   11 Query	SHOW DATABASES
+2026-11-10T07:37:22.485769Z	   11 Query	CREATE DATABASE shop
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci
+2026-11-10T07:37:28.938475Z	   11 Query	SHOW DATABASES
+2026-11-10T07:38:15.104512Z	   13 Query	SHOW DATABASES
+2026-11-10T07:38:22.231094Z	   13 Query	SHOW TABLES
+2026-11-10T07:38:30.112340Z	   13 Query	SELECT * FROM products1
+2026-11-10T07:38:36.890123Z	   13 Query	SELECT * FROM products2

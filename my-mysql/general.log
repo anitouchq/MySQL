@@ -1,34 +1,36 @@
-/usr/sbin/mysqld, Version: 26.10.0 (MySQL Community Server - GPL). started with:
-Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
-Time                 Id Command    Argument
-2026-11-05T07:35:54.206178Z	   10 Quit	
-2026-11-05T07:37:15.027069Z	   11 Connect	root@localhost on  using Socket
-2026-11-05T07:37:15.027463Z	   11 Query	select @@version_comment limit 1
-2026-11-05T07:37:21.215481Z	   11 Query	CREATE DATABASE IF NOT EXISTS university
-2026-11-05T07:37:21.223265Z	   11 Query	SELECT DATABASE()
-2026-11-05T07:37:21.223502Z	   11 Init DB	university
-2026-11-05T07:37:21.224282Z	   11 Query	show databases
-2026-11-05T07:37:21.226280Z	   11 Query	show tables
-2026-11-05T07:37:21.228195Z	   11 Query	CREATE TABLE IF NOT EXISTS students (
+2026-11-10T06:35:12.104512Z	    8 Query	SHOW DATABASES
+2026-11-10T06:35:45.231094Z	    8 Query	CREATE DATABASE my_database
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci
+2026-11-10T06:35:50.112340Z	    8 Query	CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    age INT,
-    group_name VARCHAR(20)
-)
-2026-11-05T07:37:21.249240Z	   11 Query	INSERT INTO students (name, age, group_name)
-VALUES
-('Ivan', 20, 'ИС-31'),
-('Maria', 21, 'ИС-32'),
-('Alex', 19, 'ИС-31')
-2026-11-05T07:37:21.257473Z	   11 Query	SELECT * FROM students
-2026-11-05T07:37:21.258116Z	   11 Query	SELECT * FROM students WHERE age > 19
-2026-11-05T07:37:21.258833Z	   11 Query	UPDATE students
-SET age = 22
-WHERE name = 'Maria'
-2026-11-05T07:37:21.260871Z	   11 Query	SELECT * FROM students
-2026-11-05T07:37:21.261296Z	   11 Query	DELETE FROM students
-WHERE name = 'Alex'
-2026-11-05T07:37:21.265720Z	   11 Query	SELECT * FROM students
-2026-11-05T07:37:21.266232Z	   11 Query	SHOW TABLES
-2026-11-05T07:37:22.361131Z	   11 Query	SHOW DATABASES
-2026-11-05T07:37:31.426454Z	   11 Quit	
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+2026-11-10T06:35:55.890123Z	    8 Query	INSERT INTO users (name, email) VALUES
+  ('Иван Иванов', 'ivan@example.com'),
+  ('Пётр Петров', 'petr@example.com'),
+  ('Мария Сидорова', 'maria@example.com')
+2026-11-10T06:36:01.445120Z	    8 Query	SELECT * FROM users
+2026-11-10T06:36:15.672311Z	    8 Query	SHOW DATABASES
+2026-11-10T06:36:25.109283Z	    8 Query	SHOW TABLES
+2026-11-10T06:36:40.332190Z	    8 Query	SELECT * FROM users
+2026-11-10T06:37:02.554129Z	    8 Query	INSERT INTO users (name, email) VALUES ('Павел Иванов', 'pavel@example.com')
+2026-11-10T06:37:08.918273Z	    8 Query	INSERT INTO users (name, email) VALUES ('Марк Аврелий', 'mark@example.com')
+2026-11-10T06:37:22.192837Z	    8 Query	SELECT name, HEX(name) FROM users WHERE id = 1
+2026-11-10T06:37:35.647382Z	    8 Query	SELECT * FROM users
+2026-11-10T06:38:01.283746Z	    8 Query	UPDATE users SET name = 'Иван Петров' WHERE id = 1
+2026-11-10T06:38:14.837465Z	    8 Query	UPDATE users SET name = 'Vasya' WHERE id = 1
+2026-11-10T06:38:25.192834Z	    8 Query	SELECT * FROM users
+2026-11-10T06:38:38.475869Z	    8 Query	SELECT * FROM users WHERE id = 1
+2026-11-10T06:38:50.928374Z	    8 Query	SELECT name, email FROM users
+2026-11-10T06:39:03.384756Z	    8 Query	SELECT name FROM users
+2026-11-10T06:39:15.748392Z	    8 Query	SELECT name, email FROM users WHERE id = 1
+2026-11-10T06:39:28.102938Z	    8 Query	SELECT * FROM users WHERE id = 1
+2026-11-10T06:41:10.564738Z	   10 Query	SHOW TABLES
+2026-11-10T06:41:20.847362Z	   10 Query	SELECT * FROM users
+2026-11-10T06:41:35.293847Z	   10 Query	DELETE FROM users WHERE id = 2
+2026-11-10T06:41:50.675849Z	   10 Query	DROP TABLE users
+2026-11-10T06:41:58.192038Z	   10 Query	SHOW TABLES
+2026-11-10T06:42:12.485769Z	   10 Query	DROP DATABASE my_database
+2026-11-10T06:42:20.938475Z	   10 Query	SHOW DATABASES
